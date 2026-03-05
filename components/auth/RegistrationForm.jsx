@@ -1,6 +1,8 @@
+import { registerUser } from "@/app/actions";
+
 const RegistrationForm = () => {
   return (
-    <form className="login-form">
+    <form className="login-form" action={registerUser}>
       <div>
         <label htmlFor="name">Full Name</label>
         <input type="text" name="name" id="name" />
@@ -18,7 +20,7 @@ const RegistrationForm = () => {
 
       <div>
         <label htmlFor="phone">Phone Number</label>
-        <input type="tel" name="pnone" id="phone" />
+        <input type="tel" name="phone" id="phone" />
       </div>
 
       <div>
