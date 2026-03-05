@@ -18,4 +18,16 @@
   .container {
     @apply w-full max-w-[var(--container-page-width)] mx-auto px-4;
   }
+
+  .login-form {
+    @apply flex flex-col my-6;
+  }
+
+  .login-form div {
+    @apply flex flex-col gap-2 my-2;
+  }
+
+  .login-form input {
+    @apply border border-black/20 rounded-md px-4 py-2 bg-gray-300 text-black;
+  }
 }
