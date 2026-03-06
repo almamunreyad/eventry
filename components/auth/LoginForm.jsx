@@ -1,11 +1,15 @@
-'use client'
+"use client";
 import { performLogin } from "@/app/actions";
+import useAuth from "@/app/hooks/useAuth";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
-
-
 
 const LoginForm = () => {
   const [error, setError] = useState("");
+
+  const { setAuth } = useAuth();
+
+  const router = useRouter();
 
   async function onSubmit(event) {
     event.preventDefault();
@@ -13,21 +17,22 @@ const LoginForm = () => {
     try {
       const formData = new FormData(event.currentTarget);
 
-      await performLogin(formData);
+      const found = await performLogin(formData);
 
+      if (found) {
+        setAuth(found);
+        router.push("/");
+      } else {
+        setError(`User with email ${formData.get("email")} not found!`);
+      }
     } catch (err) {
       setError(err.message);
     }
   }
 
-
-
   return (
     <>
-      <div className="text-red-800 my-10">
-        {error}
-      </div>
-
+      <div className="text-red-800 my-10">{error}</div>
 
       <form className="login-form" onSubmit={onSubmit}>
         <div>
