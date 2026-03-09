@@ -36,4 +36,24 @@ async function findUserByCredentials(credentials) {
 }
 
 
-export { getAllEvents, getEventById, createUser, findUserByCredentials }
+// update interested ids
+async function updateInterest(eventId, authId) {
+    const event = await eventModel.findById(eventId);
+
+    if (event) {
+        const foundUsers = event.interested_ids.find(id => id.toString() === authId.toString());
+
+        if (foundUsers) {
+            event.interested_ids.pull(new mongoose.Types.ObjectId(authId));
+        } else {
+            event.interested_ids.push(new mongoose.Types.ObjectId(authId));
+        }
+
+        event.save();
+    }
+
+}
+
+
+
+export { getAllEvents, getEventById, createUser, findUserByCredentials, updateInterest }
