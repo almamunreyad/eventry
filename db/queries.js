@@ -1,6 +1,7 @@
 import { eventModel } from "@/models/event-models";
 import { userModel } from "@/models/user-model";
 import { replaceMongoIdInArray, replaceMongoIdInObject } from "@/utils/data-util";
+import mongoose from "mongoose";
 
 
 // get all events
@@ -54,6 +55,30 @@ async function updateInterest(eventId, authId) {
 
 }
 
+// update going ids
+// async function updateGoing(eventId, authId) {
+//     const event = await eventModel.findById(eventId);
+//     event.going_ids.push(new mongoose.Types.ObjectId(authId));
+//     event.save();
+// }
+async function updateGoing(eventId, authId) {
+    if (!authId) return;
+
+    const event = await eventModel.findById(eventId);
+
+    if (event) {
+        const alreadyGoing = event.going_ids.find(
+            (id) => id.toString() === authId.toString()
+        );
+
+        if (!alreadyGoing) {
+            event.going_ids.push(new mongoose.Types.ObjectId(authId));
+        }
+
+        await event.save();
+    }
+}
 
 
-export { getAllEvents, getEventById, createUser, findUserByCredentials, updateInterest }
+
+export { getAllEvents, getEventById, createUser, findUserByCredentials, updateInterest, updateGoing }

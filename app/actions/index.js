@@ -1,6 +1,6 @@
 'use server'
 
-import { createUser, findUserByCredentials, updateInterest } from "@/db/queries";
+import { createUser, findUserByCredentials, updateGoing, updateInterest } from "@/db/queries";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
@@ -44,7 +44,18 @@ async function addInterestedEvent(eventId, authId) {
 }
 
 
+// actions for update going
+async function addGoingEvent(eventId, user) {
+    try {
+        await updateGoing(eventId, user?.id);
+    } catch (error) {
+        throw error;
+    }
+
+    revalidatePath('/');
+    redirect('/');
+}
 
 
 
-export { registerUser, performLogin, addInterestedEvent }
+export { registerUser, performLogin, addInterestedEvent, addGoingEvent }

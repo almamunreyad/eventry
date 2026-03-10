@@ -17,9 +17,7 @@ const HeroSection = ({ eventInfo }) => {
       <div className="flex items-end">
         <div className="flex-auto py-4">
           <h1 className="font-bold text-2xl">{eventInfo?.location}</h1>
-          <p className="text-[#9C9C9C] text-base mt-1">
-            {eventInfo?.name}
-          </p>
+          <p className="text-[#9C9C9C] text-base mt-1">{eventInfo?.name}</p>
           <div className="text-[#737373] text-sm mt-1">
             <span>{eventInfo?.interested_ids?.length} Interested</span>
             <span className=" mx-2">|</span>
@@ -27,7 +25,12 @@ const HeroSection = ({ eventInfo }) => {
           </div>
         </div>
 
-        <ActionButtons formDetails={true} />
+        <ActionButtons
+          eventId={eventInfo?.id}
+          interestedUserIds={eventInfo?.interested_ids}
+          goingUserIds={eventInfo?.going_ids}
+          formDetails={true}
+        />
       </div>
     </section>
   );
